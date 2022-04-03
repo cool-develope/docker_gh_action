@@ -21,4 +21,4 @@ jobs:
           push: true
           tags: cooldeveloper0606/docker_gh
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.GIT_TOKEN }}
+            "github_token=${{ secrets.GIT_TOKEN }}"
