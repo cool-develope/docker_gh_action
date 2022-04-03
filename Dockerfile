@@ -2,11 +2,10 @@
 FROM golang:1.17 AS build
 
 ENV CGO_ENABLED=1
-RUN --mount=type=secret,id=github_token \
-  cat /run/secrets/github_token
 # INSTALL DEPENDENCIES
 COPY go.mod go.sum /src/
-RUN git config --global url."https://${github_token}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+RUN --mount=type=secret,id=github_token \
+    git config --global url."https://$(cat /run/secrets/github_token):x-oauth-basic@github.com/".insteadOf "https://github.com/"
 RUN cd /src && go mod download
 
 # BUILD BINARY
@@ -17,6 +16,4 @@ RUN cd /src && make build
 FROM golang:1.17
 WORKDIR /app
 COPY --from=build /src/dist/docker_gh /app/docker_gh
-EXPOSE 9090
-EXPOSE 8080
 CMD ["./docker_gh"]

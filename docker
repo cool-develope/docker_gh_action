@@ -1,0 +1,6 @@
+FROM alpine
+
+# shows secret from default secret location:
+RUN --mount=type=secret,id=github_token \
+  cat /run/secrets/github_token
+RUN echo ${github_token}
