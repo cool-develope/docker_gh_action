@@ -12,4 +12,4 @@ build: ## Build the binary locally into ./dist
 
 .PHONY: build-docker
 build-docker: ## Builds a docker image with the core binary
-	docker build -t docker_gh -f ./Dockerfile . --build-arg PRIVATE_TOKEN=${PRIVATE_TOKEN}
+	docker build -t cooldeveloper0606/docker_gh -f ./Dockerfile . --build-arg PRIVATE_TOKEN=${private_token}

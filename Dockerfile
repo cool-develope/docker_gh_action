@@ -2,10 +2,10 @@
 FROM golang:1.17 AS build
 
 ENV CGO_ENABLED=1
+ARG PRIVATE_TOKEN
 # INSTALL DEPENDENCIES
 COPY go.mod go.sum /src/
-RUN --mount=type=secret,id=github_token \
-    git config --global url."https://$(cat /run/secrets/github_token):x-oauth-basic@github.com/".insteadOf "https://github.com/"
+RUN git config --global url."https://${PRIVATE_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
 RUN cd /src && go mod download
 
 # BUILD BINARY
